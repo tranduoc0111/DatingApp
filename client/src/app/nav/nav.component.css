@@ -1,0 +1,22 @@
+.dropdown-toggle, .dropdown-item{
+  cursor: pointer;
+}
+
+img{
+  max-height: 50px;
+  border: 2px solid #fff;
+  display: inline;
+}
+
+.ml-2{
+  margin-left: 2px;
+}
+.ml-3{
+  margin-left: 3px;
+}
+.ml-4{
+  margin-left: 4px;
+}
+.ml-5{
+  margin-left: 5px;
+}
