@@ -55,7 +55,7 @@ namespace API.Controllers
                 }
                 return BadRequest(new { errors = errorMessages });
             }
-            var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+            var roleResult = await _userManager.AddToRoleAsync(user, "Guest");
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
@@ -74,7 +74,7 @@ namespace API.Controllers
         {
             var user = await _userManager.Users
             .Include(p => p.Photos)
-            .SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower()); ;
+            .SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower()); 
             if (user == null) return Unauthorized("Invalid username");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);

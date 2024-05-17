@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, take } from 'rxjs';
 import { Member } from 'src/app/models/member';
 import { Pagination } from 'src/app/models/pagination';
@@ -17,13 +18,19 @@ export class MemberListComponent implements OnInit {
   pagination!: Pagination;
   userParams!: UserParams;
   user!: User;
+  vnp_ResponseCode: string = "";
+
   genderList = [{ value: 'male', display: 'Males' }, { value: 'female', display: 'Females' }];
-  constructor(private memberService: MembersService) {
+  constructor(private memberService: MembersService, private route: ActivatedRoute) {
     this.userParams = this.memberService.getUserParams();
   }
 
   ngOnInit(): void {
     this.loadMembers();
+    this.route.queryParamMap.subscribe(params => {
+      this.vnp_ResponseCode = params.get('vnp_ResponseCode') || ''; // Lấy giá trị của vnp_ResponseCode từ URL
+      console.log('vnp_ResponseCode:', this.vnp_ResponseCode);
+    });
   }
 
   ngAfterViewInit() {

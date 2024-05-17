@@ -47,7 +47,6 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        [Authorize(Roles ="Member")]
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
