@@ -14,6 +14,7 @@ import { PreventUnsavedChangesGuard } from './guard/prevent-unsaved-changes.guar
 import { MemberDetailedResolver } from './resolvers/member-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './guard/admin.guard';
+import { BillsComponent } from './bills/bills.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
     { path: 'lists', component: ListsComponent },
     { path: 'messages', component: MessagesComponent },
     { path: 'admin', component: AdminPanelComponent, canActivate:[AdminGuard] },
+    { path: 'bills', component: BillsComponent },
   ]
   },
   { path: 'errors', component: TestErrorsComponent },

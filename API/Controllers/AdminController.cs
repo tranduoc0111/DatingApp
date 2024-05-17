@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.Data;
+using API.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,15 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    public class AdminController :  BaseApiController
+    public class AdminController : BaseApiController
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly DataContext _dataContext;
 
-        public AdminController(UserManager<AppUser> userManager)
+        public AdminController(UserManager<AppUser> userManager, DataContext dataContext)
         {
             _userManager = userManager;
+            _dataContext = dataContext;
         }
 
         [Authorize(Policy = "RequireAdminRole")]
@@ -62,9 +65,100 @@ namespace API.Controllers
             return Ok(await _userManager.GetRolesAsync(user));
         }
 
-        [Authorize(Policy = "ModeratePhotoRole")]
+        [HttpPost("update-role")]
+        public async Task<ActionResult> UpdateRole(int userId, int billId)
+        {
+            try
+            {
+                var userBill = await _dataContext.Bills.FirstOrDefaultAsync(b => b.UserId == userId && b.BillId == billId);
+                if (userBill == null)
+                {
+                    return BadRequest("UserBill not found for the specified userId and billId");
+                }
+
+                var userRoles = await _dataContext.UserRoles
+                    .Where(ur => ur.UserId == userId)
+                    .ToListAsync();
+
+                if (userBill.BillId == 1)
+                {
+                    foreach (var userRole in userRoles)
+                    {
+                        if (userRole.RoleId == 4)
+                        {
+                            _dataContext.UserRoles.Remove(userRole);
+                            var newUserRole = new AppUserRole
+                            {
+                                UserId = userId,
+                                RoleId = 1
+                            };
+                            _dataContext.UserRoles.Add(newUserRole);
+                        }
+                        else if(userRole.RoleId == 3 && userRole.RoleId != 4)
+                        {
+                            var newUserRole = new AppUserRole
+                            {
+                                UserId = userId,
+                                RoleId = 1
+                            };
+                            _dataContext.UserRoles.Add(newUserRole);
+                        }
+                        else
+                        {
+                            return BadRequest("Failed to add to roles");
+                        }
+                    }
+                }
+                else if (userBill.BillId == 2)
+                {
+                    foreach (var userRole in userRoles)
+                    {
+                        if (userRole.RoleId == 4)
+                        {
+                            _dataContext.UserRoles.Remove(userRole);
+                            var newUserRole = new AppUserRole
+                            {
+                                UserId = userId,
+                                RoleId = 3
+                            };
+                            _dataContext.UserRoles.Add(newUserRole);
+                        }
+                        else if (userRole.RoleId == 1 && userRole.RoleId != 4)
+                        {
+                            var newUserRole = new AppUserRole
+                            {
+                                UserId = userId,
+                                RoleId = 3
+                            };
+                            _dataContext.UserRoles.Add(newUserRole);
+                        }
+                        else
+                        {
+                            return BadRequest("Failed to add to roles");
+                        }
+                    }
+                }
+
+                await _dataContext.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch (DbUpdateException ex)
+            {
+                // Xử lý ngoại lệ khi lưu thay đổi vào cơ sở dữ liệu
+                return StatusCode(500, $"Failed to update user roles: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Xử lý các ngoại lệ khác
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+    [Authorize(Policy = "ModeratePhotoRole")]
         [HttpGet("photos-to-moderate")]
-        public  ActionResult GetPhotosForModeration()
+        public ActionResult GetPhotosForModeration()
         {
             return Ok("Admins or moderators can see this");
         }

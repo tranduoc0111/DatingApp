@@ -43,3 +43,7 @@
   animation: fa-blink 1.5s linear infinite;
   color: rgb(1,189,42);
 }
+.disabled {
+  pointer-events: none; /* Không cho phép sự kiện chuột */
+  opacity: 0.6; /* Giảm độ mờ */
+}
