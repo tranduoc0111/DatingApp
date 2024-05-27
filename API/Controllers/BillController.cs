@@ -34,26 +34,33 @@ namespace API.Controllers
         }
 
         [HttpPost("create-userbill")]
-        public async Task<ActionResult> CreateUserBill(int userId, [FromQuery] BillsDTo input)
+        public async Task<ActionResult> CreateUserBill(BillsDTo input)
         {
             try
             {
-                var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+                var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.UserName == input.Username);
                 if (user == null)
                 {
                     return BadRequest("User not found");
                 }
 
-                var bill = await _dataContext.Bill.FirstOrDefaultAsync(b => b.Money == input.Money);
+                var bill = await _dataContext.Bill.FirstOrDefaultAsync(b => b.Amount == input.Amount);
                 if (bill == null)
                 {
                     return BadRequest("Payment plan does not exist");
                 }
+
+                var userbills = await _dataContext.Bills.FirstOrDefaultAsync(ub => ub.UserId == user.Id && ub.BillId == bill.Id);
+                if (userbills != null)
+                {
+                    return BadRequest("UserBill exist");
+
+                }
                 var userBill = new UserBill
                 {
-                    UserId = userId,
+                    UserId = user.Id,
                     BillId = bill.Id,
-                    Money = input.Money
+                    Amount = input.Amount
                 };
                 _dataContext.Bills.Add(userBill);
                 await _dataContext.SaveChangesAsync();
@@ -64,5 +71,41 @@ namespace API.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetUserBill(BillsDTo input)
+        {
+            var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.UserName == input.Username);
+            var bill = await _dataContext.Bill.FirstOrDefaultAsync(b => b.Amount == input.Amount);
+
+            var userbills = await _dataContext.Bills.FirstOrDefaultAsync(ub => ub.UserId == user.Id && ub.BillId == bill.Id);
+
+            var userBill = new UserBill
+            {
+                Id = userbills.Id,
+                UserId = userbills.UserId,
+                BillId = userbills.BillId,
+                Amount = userbills.Amount
+            };
+
+            return Ok(userBill);
+        }
+
+        [HttpGet("get-bills")]
+
+        public async Task<ActionResult> GetAllBills()
+        {
+            try
+            {
+                var result = await (from bill in _dataContext.Bill
+                                    select bill).ToListAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
     }
 }

@@ -8,6 +8,7 @@ namespace API.DTOs
     public class BillsDTo
     {
         public int Id { get; set; }
-        public double Money { get; set; }
+        public double Amount { get; set; }
+        public string Username { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace API.Entities
     {
         [Key]
         public int Id { get; set; }
-        public double Money { get; set; }
+        public double Amount { get; set; }
 
     }
 }

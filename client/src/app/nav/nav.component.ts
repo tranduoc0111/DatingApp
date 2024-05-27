@@ -11,7 +11,6 @@ import { ToastrService } from 'ngx-toastr';
 export class NavComponent implements OnInit {
   model: any = {};
   currentUser: any = {};
-  checkRole: boolean = false;
 
   constructor(public accountService: AccountService, private router: Router,
     private toastr: ToastrService) {
@@ -19,19 +18,11 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.accountService.getCurrentUser().subscribe(res => {
-      if (res) {
-        this.checkRole = res.roles.find(e=>e == "Member") ? true : false;
-      } else {
-        console.log('Không có người dùng hiện tại');
-      }
-    });
   }
 
   login() {
     this.accountService.login(this.model).subscribe(res =>{
     this.router.navigateByUrl('/members')
-    this.checkRole = res.roles.find(e=>e == "Member") ? true : false;
     } )
   }
 

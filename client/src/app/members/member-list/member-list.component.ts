@@ -18,19 +18,13 @@ export class MemberListComponent implements OnInit {
   pagination!: Pagination;
   userParams!: UserParams;
   user!: User;
-  vnp_ResponseCode: string = "";
-
   genderList = [{ value: 'male', display: 'Males' }, { value: 'female', display: 'Females' }];
-  constructor(private memberService: MembersService, private route: ActivatedRoute) {
+  constructor(private memberService: MembersService) {
     this.userParams = this.memberService.getUserParams();
   }
 
   ngOnInit(): void {
     this.loadMembers();
-    this.route.queryParamMap.subscribe(params => {
-      this.vnp_ResponseCode = params.get('vnp_ResponseCode') || ''; // Lấy giá trị của vnp_ResponseCode từ URL
-      console.log('vnp_ResponseCode:', this.vnp_ResponseCode);
-    });
   }
 
   ngAfterViewInit() {

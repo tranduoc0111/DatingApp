@@ -1,4 +1,146 @@
-<p>Hello em</p>
-<button (click)="vnPay()">
-Meo
-</button>
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+  <script src="/docs/5.3/assets/js/color-modes.js"></script>
+
+  <title>Pricing</title>
+
+</head>
+
+<body>
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    <symbol id="check" viewBox="0 0 16 16">
+      <title>Check</title>
+      <path
+        d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z">
+      </path>
+    </symbol>
+  </svg>
+
+  <div class="container py-3">
+    <header>
+      <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">Pricing</h1>
+        <p class="fs-5 text-body-secondary">Pay quickly and easily to unlock new features to connect with the community.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <div class="row row-cols-1 row-cols-md-2 mb-2 text-center">
+        <div class="col" id="bill-1">
+          <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+              <h4 class="my-0 fw-normal">Nor</h4>
+            </div>
+            <div class="card-body">
+              <h1 class="card-title pricing-card-title">150000 vnđ<small class="text-body-secondary fw-light">/month</small></h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Unlock message</li>
+                <li>Connect with multiple users</li>
+                <li>Many other amenities</li>
+              </ul>
+              <button type="button" class="w-100 btn btn-lg btn-primary" data-id="" data-amount="" (click)="handleButtonClick($event)">Buy</button>
+            </div>
+          </div>
+        </div>
+        <div class="col" id="bill-2">
+          <div class="card mb-4 rounded-3 shadow-sm border-primary">
+            <div class="card-header py-3 text-bg-primary border-primary">
+              <h4 class="my-0 fw-normal">Pro</h4>
+            </div>
+            <div class="card-body">
+              <h1 class="card-title pricing-card-title">300000 vnđ<small class="text-body-secondary fw-light">/month</small></h1>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li>Unlock personal information editing</li>
+                <li>Connect with multiple users</li>
+                <li>Many other amenities</li>
+              </ul>
+              <button type="button" class="w-100 btn btn-lg btn-primary" data-id="" data-amount="" (click)="handleButtonClick($event)">Buy</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <h2 class="display-6 text-center mb-3">Compare plans</h2>
+
+      <div class="table-responsive">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th style="width: 34%;"></th>
+              <th style="width: 22%;">Nor</th>
+              <th style="width: 22%;">Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="text-start">Public</th>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+            </tr>
+            <tr>
+              <th scope="row" class="text-start">Private</th>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <th scope="row" class="text-start">Permissions</th>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+            </tr>
+            <tr>
+              <th scope="row" class="text-start">Make unlimited friends</th>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+            </tr>
+            <tr>
+              <th scope="row" class="text-start">Unlock message</th>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row" class="text-start">Unlock personal information editing</th>
+              <td></td>
+              <td><svg class="bi" width="24" height="24">
+                  <use xlink:href="#check"></use>
+                </svg></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+  </div>
+  <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>

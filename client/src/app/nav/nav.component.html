@@ -10,11 +10,11 @@
           <a class="nav-link " routerLink="/lists" routerLinkActive="active">Lists</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="checkRole" class="nav-link " routerLink="/messages" routerLinkActive="active">Messages</a>
+          <a *appHasRole='["Member"]' class="nav-link " routerLink="/messages" routerLinkActive="active">Messages</a>
         </li>
       </ng-container>
 
-      <li *appHasRole='["Admin", "Moderator"]' class="nav-item">
+      <li *appHasRole='["Admin"]' class="nav-item">
         <a class="nav-link " routerLink="/admin" routerLinkActive="active">Admin</a>
       </li>
       <li class="nav-item">
@@ -25,8 +25,8 @@
       <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}">
       <a class="dropdown-toggle text-light ml-5" dropdownToggle>Welcome {{user.knowAs || user.username | titlecase}}</a>
       <div class="dropdown-menu mt-3" *dropdownMenu>
-        <a *ngIf="checkRole" class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
-        <div *ngIf="checkRole" class="dropdown-divider"></div>
+        <a *appHasRole='["Moderator"]' class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
+        <div *appHasRole='["Moderator"]' class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="logout()">Logout</a>
       </div>
     </div>

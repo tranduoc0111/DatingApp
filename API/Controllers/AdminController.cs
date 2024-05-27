@@ -1,4 +1,5 @@
 ﻿using API.Data;
+using API.DTOs;
 using API.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -66,18 +67,20 @@ namespace API.Controllers
         }
 
         [HttpPost("update-role")]
-        public async Task<ActionResult> UpdateRole(int userId, int billId)
+        public async Task<ActionResult> UpdateRole(BillsDTo input)
         {
             try
             {
-                var userBill = await _dataContext.Bills.FirstOrDefaultAsync(b => b.UserId == userId && b.BillId == billId);
+                var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.UserName == input.Username);
+
+                var userBill = await _dataContext.Bills.FirstOrDefaultAsync(b => b.UserId == user.Id && b.BillId == input.Id);
                 if (userBill == null)
                 {
                     return BadRequest("UserBill not found for the specified userId and billId");
                 }
 
                 var userRoles = await _dataContext.UserRoles
-                    .Where(ur => ur.UserId == userId)
+                    .Where(ur => ur.UserId == user.Id)
                     .ToListAsync();
 
                 if (userBill.BillId == 1)
@@ -89,7 +92,7 @@ namespace API.Controllers
                             _dataContext.UserRoles.Remove(userRole);
                             var newUserRole = new AppUserRole
                             {
-                                UserId = userId,
+                                UserId = user.Id,
                                 RoleId = 1
                             };
                             _dataContext.UserRoles.Add(newUserRole);
@@ -98,7 +101,7 @@ namespace API.Controllers
                         {
                             var newUserRole = new AppUserRole
                             {
-                                UserId = userId,
+                                UserId = user.Id,
                                 RoleId = 1
                             };
                             _dataContext.UserRoles.Add(newUserRole);
@@ -118,7 +121,7 @@ namespace API.Controllers
                             _dataContext.UserRoles.Remove(userRole);
                             var newUserRole = new AppUserRole
                             {
-                                UserId = userId,
+                                UserId = user.Id,
                                 RoleId = 3
                             };
                             _dataContext.UserRoles.Add(newUserRole);
@@ -127,7 +130,7 @@ namespace API.Controllers
                         {
                             var newUserRole = new AppUserRole
                             {
-                                UserId = userId,
+                                UserId = user.Id,
                                 RoleId = 3
                             };
                             _dataContext.UserRoles.Add(newUserRole);
