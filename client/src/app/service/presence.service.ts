@@ -34,6 +34,7 @@ export class PresenceService {
     this.hubConenction.on('UserIsOnline', username => {
       this.onlineUsers$.pipe(take(1)).subscribe(usernames => {
         this.onlineUsersSource.next([...usernames, username])
+        this.toastr.info(username + " đã online");
       })
     })
 

@@ -1,24 +1,20 @@
-import { useAnimation } from '@angular/animations';
-import { AccountService } from './../service/account.service';
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { inject } from '@angular/core';
+import { CanActivateFn } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, map } from 'rxjs';
+import { map } from 'rxjs';
+import { AccountService } from '../service/account.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate {
-  constructor(private accountService: AccountService, private toastr: ToastrService) {
+export const authGuard: CanActivateFn = (route, state) => {
+  const accountService = inject(AccountService);
+  const toastr = inject(ToastrService);
 
-  }
-  canActivate(): Observable<boolean> {
-    return this.accountService.currentUser$.pipe(
-      map((user):any => {
-        if (user) return true;
-        this.toastr.error('You shall not pass!')
-      }),
-    )
-  }
-
-}
+  return accountService.currentUser$.pipe(
+    map(user => {
+      if (user) return true;
+      else {
+        toastr.error('Vui lòng đăng nhập!');
+        return false;
+      }
+    })
+  )
+};

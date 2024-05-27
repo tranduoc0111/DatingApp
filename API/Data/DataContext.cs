@@ -42,7 +42,7 @@ namespace API.Data
                 .IsRequired();
 
             builder.Entity<UserLike>()
-                .HasKey(k => new { k.SourceUserId, k.LikedUserId });
+                .HasKey(k => new { k.SourceUserId, k.LikedUserId});
 
             builder.Entity<UserLike>()
                 .HasOne(s => s.SourceUser)

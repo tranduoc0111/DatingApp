@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AccountService } from '../service/account.service';
 import { ToastrService } from 'ngx-toastr';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,13 +13,12 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter
   registerForm!: FormGroup;
   maxDate!: Date;
-  validationErrors: string[] =[];
+  validationErrors: string[] = [];
 
   constructor(private accountService: AccountService, private toastr: ToastrService,
-     private fb: FormBuilder, private router: Router) {
+    private fb: FormBuilder, private router: Router) {
 
   }
-
 
   ngOnInit(): void {
     this.initForm();
@@ -27,7 +26,7 @@ export class RegisterComponent implements OnInit {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
 
-  initForm(){
+  initForm() {
     this.registerForm = this.fb.group({
       gender: ['male',Validators.required],
       username: ['',Validators.required],
@@ -42,7 +41,7 @@ export class RegisterComponent implements OnInit {
 
   matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
-      return control?.value === control?.parent?.get(matchTo)?.value ? null : {isMatching: true}
+      return control?.value === control?.parent?.get(matchTo)?.value ? null : { isMatching: true }
     }
   }
 

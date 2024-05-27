@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,10 +31,14 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
+import { AboutComponent } from './about/about.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 import { BillsComponent } from './bills/bills.component';
 
+
 @NgModule({
-  declarations: [
+  declarations: [		
     AppComponent,
     NavComponent,
     HomeComponent,
@@ -57,8 +61,12 @@ import { BillsComponent } from './bills/bills.component';
     HasRoleDirective,
     AdminPanelComponent,
     RolesModalComponent,
+    AboutComponent,
+    LoginComponent,
+    SignupComponent,
     BillsComponent
-  ],
+
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -67,12 +75,11 @@ import { BillsComponent } from './bills/bills.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
 })

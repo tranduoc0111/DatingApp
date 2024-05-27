@@ -34,6 +34,7 @@ constructor(public presence: PresenceService, private route: ActivatedRoute
     this.router.routeReuseStrategy.shouldReuseRoute= () => false;
   }
 
+
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.member = data['member'];
