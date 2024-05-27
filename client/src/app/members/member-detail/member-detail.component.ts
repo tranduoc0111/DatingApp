@@ -24,8 +24,6 @@ galleryImages!: NgxGalleryImage[];
 activeTab!: TabDirective;
 messages: Message[] = [];
 user!: User;
-checkRole: boolean = false;
-
 
 constructor(public presence: PresenceService, private route: ActivatedRoute
   , private messageService: MessageService, private accountService: AccountService,
@@ -34,17 +32,14 @@ constructor(public presence: PresenceService, private route: ActivatedRoute
     this.router.routeReuseStrategy.shouldReuseRoute= () => false;
   }
 
+
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.member = data['member'];
     })
 
-    this.accountService.getCurrentUser().subscribe(res => {
-      if (res) {
-        this.checkRole = res.roles.find(e=>e == "Member") ? true : false;
-      } else {
-        console.log('Không có người dùng hiện tại');
-      }
+    this.route.queryParams.subscribe(params => {
+      params['tab'] ? this.selectTab(params['tab']) : this.selectTab(0);
     });
 
     this.galleryOptions =[
@@ -59,12 +54,6 @@ constructor(public presence: PresenceService, private route: ActivatedRoute
     ]
     this.galleryImages = this.getImages();
 
-  }
-
-  ngAfterViewInit(): void{
-    this.route.queryParams.subscribe(params => {
-      params['tab'] ? this.selectTab(params['tab']) : this.selectTab(0);
-    });
   }
 
   getImages():NgxGalleryImage[]{

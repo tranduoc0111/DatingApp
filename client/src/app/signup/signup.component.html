@@ -1,0 +1,141 @@
+<div class="outer">
+  <div class="container">
+    <div class="row">
+      <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+        <div class="panel border bg-white">
+          <div class="panel-heading">
+            <h3 class="pt-3 font-weight-bold">
+              Đăng ký
+            </h3>
+          </div>
+
+          <div class="panel-body p-3">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <div class="form-check d-flex flex-row row pl-1">
+                  <div class="label-gender col-md-4">
+                    <label><b>Giới tính</b></label>
+                  </div>
+
+                  <div class="man-check col-md-4" style="padding-left: 50px;">
+                    <input class="form-check-input" type="radio" [value]="'male'" formControlName="gender" name="gender"
+                      id="radioMan">
+                    <span class="fa-solid fa-mars" style="color: #1791ec; padding-right: 10px;"></span>
+                    <label class="form-check-label" for="radioMan">
+                      Nam
+                    </label>
+                  </div>
+
+                  <div class="woman-check col-md-4" style="padding-left: 50px;">
+                    <input class="form-check-input" type="radio" [value]="'female'" formControlName="gender"
+                      name="gender" id="radioWoman">
+                    <span class="fa-solid fa-venus pr-2" style="color: #fea6ea; padding-right: 10px;"></span>
+                    <label class="form-check-label" for="radioWoman">
+                      Nữ
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <span class="fa fa-user p-2"></span>
+                  <input type="text" formControlName="username" placeholder="Tên tài khoản">
+                </div>
+
+                <div *ngIf="form.controls?.['username']?.invalid && form.controls?.['username']?.touched"
+                  class="text-danger">
+                  Tên tài khoản không được để trống.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <span class="fa-solid fa-file-signature p-2"></span>
+                  <input type="text" formControlName="knowAs" placeholder="Họ và tên">
+                </div>
+
+                <div *ngIf="form?.get('knowAs')?.invalid && form?.get('knowAs')?.touched">
+                  <div *ngIf="form?.get('knowAs')?.errors?.['required']" class="text-danger">
+                    Họ và tên không được để trống.
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <span class="fa-solid fa-cake-candles p-2"></span>
+                  <input type="text" formControlName="dateOfBirth" class="form-control" placeholder="Sinh nhật"
+                    bsDatepicker [maxDate]="maxDate">
+                </div>
+
+                <div *ngIf="form.controls?.['dateOfBirth']?.invalid && form.controls?.['dateOfBirth']?.touched"
+                  class="text-danger">
+                  Sinh nhật không được để trống.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <span class="fa-solid fa-location-dot p-2"></span>
+                  <input type="text" formControlName="city" placeholder="Thành phố đang ở">
+                </div>
+
+                <div *ngIf="form.controls?.['city']?.invalid && form.controls?.['city']?.touched" class="text-danger">
+                  Thành phố không được để trống.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <span class="fa-solid fa-city p-2"></span>
+                  <input type="text" formControlName="country" placeholder="Quê quán">
+                </div>
+
+                <div *ngIf="form.controls?.['country']?.invalid && form.controls?.['country']?.touched"
+                  class="text-danger">
+                  Quê quán không được để trống.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <span class="fa fa-lock p-2"></span>
+                  <input [type]="type1" formControlName="password" placeholder="Mật khẩu">
+                  <span (click)="hideShowPass()" class="fa {{eyeIcon1}}"></span>
+                </div>
+
+                <div *ngIf="form?.get('password')?.invalid && form?.get('password')?.touched">
+                  <div *ngIf="form?.get('password')?.errors?.['required']" class="text-danger">
+                    Mật khẩu không được để trống.
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-field">
+                  <span class="fa-solid fa-pen-to-square p-2"></span>
+                  <input [type]="type2" formControlName="comfirmPassword" placeholder="Xác nhận mật khẩu">
+                  <span (click)="hideShowRePass()" class="fa {{eyeIcon2}}"></span>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="validationErrors.length > 0">
+                <ul class="text-danger">
+            
+                  <li *ngFor="let error of validationErrors">{{error}}</li>
+                </ul>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Đăng ký</button>
+
+              <div class="text-center pt-4 text-muted">Bạn đã có tài khoản?
+                <a id="forget" routerLink="/login">Đăng nhập</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

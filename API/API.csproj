@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20240516025326_Bills.cs" />
-    <Compile Remove="Migrations\20240516025326_Bills.Designer.cs" />
-    <Compile Remove="Migrations\20240517030642_Bills.cs" />
-    <Compile Remove="Migrations\20240517030642_Bills.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="CloudinaryDotNet" Version="1.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
@@ -22,10 +15,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.0-preview.8.20407.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0-preview.8.20407.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0-preview.8.20407.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>

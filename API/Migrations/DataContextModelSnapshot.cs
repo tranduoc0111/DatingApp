@@ -160,21 +160,6 @@ namespace API.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("API.Entities.Bills", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bill");
-                });
-
             modelBuilder.Entity("API.Entities.Connection", b =>
                 {
                     b.Property<string>("ConnectionId")
@@ -270,31 +255,6 @@ namespace API.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Photos");
-                });
-
-            modelBuilder.Entity("API.Entities.UserBill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<int>("BillId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BillId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("API.Entities.UserLike", b =>
@@ -441,21 +401,6 @@ namespace API.Migrations
                         .WithMany("Photos")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("API.Entities.UserBill", b =>
-                {
-                    b.HasOne("API.Entities.Bills", "Bill")
-                        .WithMany()
-                        .HasForeignKey("BillId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

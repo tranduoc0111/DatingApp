@@ -97,7 +97,7 @@ export class BillsComponent implements OnInit {
   updateRole() {
     if (this.vnp_TransactionStatus == "00") {
       this.billItem.username = this.user.username;
-      this.adminService.updateUserRole(this.billItem).subscribe();
+      // this.adminService.updateUserRole(this.billItem).subscribe();
     }
   }
 }

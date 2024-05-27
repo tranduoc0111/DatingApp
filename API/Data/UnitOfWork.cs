@@ -1,7 +1,5 @@
-﻿using API.DTOs;
-using API.Interfaces;
+﻿using API.Interfaces;
 using AutoMapper;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +11,11 @@ namespace API.Data
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        private readonly VnPayPaymentConfig _configuration;
-        public UnitOfWork(DataContext context, IMapper mapper, IOptions<VnPayPaymentConfig> configuration)
+
+        public UnitOfWork(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _configuration = configuration.Value;
-
         }
 
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
@@ -29,7 +25,7 @@ namespace API.Data
         public IMessageRepository MessageRepository => new MessageRepository(_context, _mapper);
 
         public ILikesRepository LikesRepository => new LikesRepository(_context);
-        public IBillRepository BillRepository => new BillRepository(_context, Options.Create(_configuration));
+
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;

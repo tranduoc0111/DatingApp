@@ -2,7 +2,7 @@ import { User } from './../models/user';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Observable, ReplaySubject, of } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PresenceService } from './presence.service';
 
@@ -10,12 +10,14 @@ import { PresenceService } from './presence.service';
   providedIn: 'root'
 })
 export class AccountService {
-  static userInfo: User;
   baseUrl = environment.apiUrl;
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient, private presence: PresenceService) {
+  constructor(
+    private http: HttpClient,
+    private presence: PresenceService
+  ) {
   }
 
   login(model: any) {
@@ -26,16 +28,15 @@ export class AccountService {
           this.setCurrentUser(user);
           this.presence.createHubConnection(user);
         }
-        AccountService.userInfo = Object.assign({}, user);
         return user;
       })
     )
   }
 
-  register(model: any){
+  register(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
-      map((user: User) =>{
-        if(user){
+      map((user: User) => {
+        if (user) {
           this.setCurrentUser(user);
           this.presence.createHubConnection(user);
         }
@@ -45,21 +46,11 @@ export class AccountService {
   }
 
   setCurrentUser(user: User) {
-    user.roles =[];
+    user.roles = [];
     const roles = this.getDecodedToken(user.token).role;
     Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
-  }
-
-  getCurrentUser(): Observable<User | null> {
-    const userString = localStorage.getItem('user');
-    if (userString) {
-      const user: User = JSON.parse(userString);
-      return of(user);
-    } else {
-      return of(null);
-    }
   }
 
   logout() {
@@ -68,8 +59,7 @@ export class AccountService {
     this.presence.stopHubConenction();
   }
 
-  getDecodedToken(token:any)
-  {
+  getDecodedToken(token: any) {
     return JSON.parse(atob(token.split('.')[1]));
   }
 }
